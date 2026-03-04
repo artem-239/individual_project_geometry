@@ -87,7 +87,7 @@ public class Main {
         if (curRect != null){
             CalculateLength calculateLength = new CalculateLength(curPoint, curRect);
             System.out.println(curRect.toString());
-            System.out.println(maxLength);
+            System.out.println("maxLength = " + maxLength);
             List<Point> points = calculateLength.getIntersectionPoints(curPoint, curRect);
             Point point1 = points.get(0);
             Point point2 = points.get(1);
