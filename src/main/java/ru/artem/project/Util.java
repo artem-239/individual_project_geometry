@@ -1,3 +1,4 @@
+package ru.artem.project;
 public class Util {
 
     public static double transformX(double inputX, int width) {

@@ -1,3 +1,4 @@
+package ru.artem.project;
 import java.awt.geom.Point2D;
 import java.util.StringTokenizer;
 
@@ -36,5 +37,19 @@ public class Point extends Point2D {
     public void setLocation(double x, double y) {
         this.x = x;
         this.y = y;
+    }
+    
+    public String toString() {
+        return String.valueOf(getX()) + ";" + String.valueOf(getY());
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+    	if (obj instanceof Point) {
+    		Point check = (Point) obj;
+    		return this.getX() == check.getX() 
+    				&& this.getY() == check.getY();
+    	}
+    	return super.equals(obj);
     }
 }

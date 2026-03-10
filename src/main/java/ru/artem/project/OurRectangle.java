@@ -1,3 +1,4 @@
+package ru.artem.project;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class OurRectangle {
         this.vertex2 = vertex2;
         this.point = point3;
         isRectangleExist = checkRectangleExist();
+        System.out.println("Добавленный прямоугольник существует? " + isRectangleExist);
     }
 
     private boolean checkRectangleExist() {
@@ -138,6 +140,22 @@ public class OurRectangle {
     }
 
     public String toString() {
-        return String.valueOf(vertex1.getX()) + ";" + String.valueOf(vertex1.getY()) + ";" + String.valueOf(vertex2.getX()) + ";" + String.valueOf(vertex2.getY()) + ";" + String.valueOf(point.getX()) + ";" + String.valueOf(point.getY());
+        return String.valueOf(vertex1.getX()) + ";" + String.valueOf(vertex1.getY())
+        	+ ";" + String.valueOf(vertex2.getX()) + ";" + String.valueOf(vertex2.getY())
+        	+ ";" + String.valueOf(point.getX()) + ";" + String.valueOf(point.getY());
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+    	if (obj instanceof OurRectangle) {
+    		OurRectangle check = (OurRectangle) obj;
+    		return this.vertex1.getX() == check.vertex1.getX() 
+    				&& this.vertex1.getY() == check.vertex1.getY()
+    				&& this.vertex2.getX() == check.vertex2.getX() 
+    				&& this.vertex2.getY() == check.vertex2.getY()
+    				&& this.point.getX() == check.point.getX() 
+    	    		&& this.point.getY() == check.point.getY();
+    	}
+    	return super.equals(obj);
     }
 }

@@ -1,3 +1,4 @@
+package ru.artem.project;
 import javax.swing.*;
 
 public class CoordinateStep extends JPanel {

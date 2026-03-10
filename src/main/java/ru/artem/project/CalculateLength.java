@@ -1,3 +1,4 @@
+package ru.artem.project;
 import java.util.*;
 
 public class CalculateLength {
