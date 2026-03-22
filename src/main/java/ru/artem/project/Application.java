@@ -5,6 +5,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionAdapter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -28,11 +31,13 @@ public class Application {
     private final int LEFTPANEL_WIDTH = 400;
     private final int LEFTPANEL_HEIGHT = 900;
     private final int LEFTPANEL_RETURN_WIDTH = 350;
-    private final int LEFTPANEL_RETURN_HEIGHT = 100;
+    private final int LEFTPANEL_RETURN_HEIGHT = 50;
     private final int LEFTPANEL_TRIANGLES_WIDTH = 350;
     private final int LEFTPANEL_TRIANGLES_HEIGHT = 400;
     private final int LEFTPANEL_POINTS_WIDTH = 350;
     private final int LEFTPANEL_POINTS_HEIGHT = 400;
+    private final int LEFTPANEL_FILECHOOSE_HEIGHT = 50;
+    private final int LEFTPANEL_FILERESULTS_HEIGHT = 800;
     //Две трети от общей ширины
     private final int MATHPANEL_WIDTH = 800;
     private final int MATHPANEL_HEIGHT = 700;
@@ -48,6 +53,10 @@ public class Application {
     private JTextField resultField = new JTextField();
     
     private List<String> fileResults = new ArrayList<>();
+    
+    private boolean mouseRectanglesSelect = false;
+    private boolean mousePointsSelect = false;
+    
 
     public Application() {
 
@@ -81,7 +90,6 @@ public class Application {
         drawingArea = new MathPanel(MATHPANEL_WIDTH,MATHPANEL_HEIGHT);
         drawingArea.paint();
         
-
         rightPanel.add(drawingArea, BorderLayout.CENTER);
 
         /* нижняя область вычислений - кнопка Сделать вычисления и область вывода результата */
@@ -131,10 +139,12 @@ public class Application {
 
         JRadioButton loadFromFile = new JRadioButton("Загрузить из файла");
         JRadioButton keyboard = new JRadioButton("Ввести данные с клавиатуры");
+        JRadioButton mouse = new JRadioButton("Ввести данные мышью");
 
         ButtonGroup group = new ButtonGroup();
         group.add(loadFromFile);
         group.add(keyboard);
+        group.add(mouse);
         
         loadFromFile.addActionListener(new ActionListener() {			
 			@Override
@@ -148,11 +158,33 @@ public class Application {
 				showKeyboardInput();
 			}
 		});
+        mouse.addActionListener(new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				showMouseInput();
+			}
+		});
 
         radioPanel.add(loadFromFile);
         radioPanel.add(keyboard);
+        radioPanel.add(mouse);
 
         leftPanel.add(radioPanel, BorderLayout.NORTH);
+        
+        JButton clearButton = new JButton("Почистить экран");
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.add(clearButton);
+        buttonPanel.setPreferredSize(new Dimension(MATHPANEL_BOTTOM_WIDTH, MATHPANEL_BOTTOM_HEIGHT));
+        
+        clearButton.addActionListener(new ActionListener() {
+        	@Override
+        	public void actionPerformed(ActionEvent e) {
+        		deleteAllFigures();
+        	}
+        });
+        
+        leftPanel.add(buttonPanel, BorderLayout.CENTER);
+        
 
         refresh();
     }
@@ -161,8 +193,10 @@ public class Application {
     private void showFileChooser() {
 
         leftPanel.removeAll();
+        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
 
         JPanel filePanel = new JPanel(new BorderLayout());
+        filePanel.setPreferredSize(new Dimension(LEFTPANEL_WIDTH, LEFTPANEL_FILECHOOSE_HEIGHT));
 
         JTextField fileField = new JTextField();
         fileField.setEditable(false);
@@ -170,6 +204,7 @@ public class Application {
         JButton chooseButton = new JButton("Выбрать файл");
         
         JPanel fileResultsPanel = new JPanel(new BorderLayout());
+        fileResultsPanel.setPreferredSize(new Dimension(LEFTPANEL_WIDTH, LEFTPANEL_FILERESULTS_HEIGHT));
         fileResultsPanel.setLayout(new BoxLayout(fileResultsPanel, BoxLayout.Y_AXIS));
         
         chooseButton.addActionListener(new ActionListener() {			
@@ -200,8 +235,8 @@ public class Application {
         filePanel.add(chooseButton, BorderLayout.EAST);
         
         leftPanel.add(createReturnPanel(), BorderLayout.NORTH);
-        leftPanel.add(fileResultsPanel);
-        leftPanel.add(filePanel, BorderLayout.SOUTH);
+        leftPanel.add(filePanel, BorderLayout.CENTER);
+        leftPanel.add(fileResultsPanel, BorderLayout.SOUTH);
 
         refresh();
     }
@@ -218,6 +253,110 @@ public class Application {
 
         refresh();
     }
+    
+    /* ---------- левая панель: панель ввода мышью ---------- */
+    private void showMouseInput() {
+
+        leftPanel.removeAll();
+        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
+
+        leftPanel.add(createReturnPanel());
+
+        JPanel allPanel = new JPanel();
+        allPanel.setLayout(new BoxLayout(allPanel, BoxLayout.Y_AXIS));
+        allPanel.setPreferredSize(new Dimension(LEFTPANEL_TRIANGLES_WIDTH, LEFTPANEL_TRIANGLES_HEIGHT + LEFTPANEL_POINTS_HEIGHT));
+        
+        JRadioButton rectanglesButton = new JRadioButton("Задать прямоугольники");
+        JRadioButton pointsButton = new JRadioButton("Задать точки");
+        
+        ButtonGroup group = new ButtonGroup();
+        group.add(rectanglesButton);
+        group.add(pointsButton);
+        
+        rectanglesButton.addActionListener(new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mouseRectanglesSelect = true;
+				mousePointsSelect = false;
+			}
+		});
+        pointsButton.addActionListener(new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mouseRectanglesSelect = false;
+				mousePointsSelect = true;
+			}
+		});
+        
+        JPanel rectanglesPanel = new JPanel();
+        rectanglesPanel.setPreferredSize(new Dimension(LEFTPANEL_TRIANGLES_WIDTH, LEFTPANEL_TRIANGLES_HEIGHT));
+        rectanglesPanel.setLayout(new BoxLayout(rectanglesPanel, BoxLayout.Y_AXIS));
+        rectanglesPanel.add(rectanglesButton);
+        
+        JPanel pointsPanel = new JPanel();
+        pointsPanel.setPreferredSize(new Dimension(LEFTPANEL_TRIANGLES_WIDTH, LEFTPANEL_POINTS_HEIGHT));
+        pointsPanel.setLayout(new BoxLayout(pointsPanel, BoxLayout.Y_AXIS));
+        pointsPanel.add(pointsButton);
+        
+        allPanel.add(rectanglesPanel);
+        allPanel.add(pointsPanel);
+        
+        leftPanel.add(allPanel);
+        
+        drawingArea.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				int x = e.getX();
+                int y = e.getY();
+                
+                int realX = Util.backTransformX(x, MATHPANEL_WIDTH);
+                int realY = Util.backTransformY(y, MATHPANEL_HEIGHT);
+				
+                Point p = new Point(realX, realY);
+                if (mouseRectanglesSelect) {
+                	//добавляем прямоугольники
+                	drawingArea.addMouseRectanglePoint(p);
+                	System.out.println("Добавил точку прямоугольника мышью");
+                } else if (mousePointsSelect) {
+                	//добавляем точки
+                	drawingArea.addPoint(p);
+                }
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+                
+			}
+        });
+        
+
+        refresh();
+    }
+    
+    private void deleteAllFigures() {
+    	drawingArea.deleteAllRectangles();
+    	drawingArea.deleteAllPoints();
+    }
+    
     /* ---------- левая панель: выход в главное меню ---------- */
     
     private JPanel createReturnPanel() {
@@ -236,8 +375,14 @@ public class Application {
     }
     
     private void backToMainMenu() {
-    	drawingArea.deleteAllRectangles();
-    	drawingArea.deleteAllPoints();
+    	mouseRectanglesSelect = false;
+		mousePointsSelect = false;
+//    	drawingArea.deleteAllRectangles();
+//    	drawingArea.deleteAllPoints();
+//    	drawingArea.deleteAllMouseRectanglePoints();
+    	for (MouseListener ml : drawingArea.getMouseListeners()) {
+    		drawingArea.removeMouseListener(ml);
+    	}
     	resultField.setText(null);
     	showRadioSelection();
     }

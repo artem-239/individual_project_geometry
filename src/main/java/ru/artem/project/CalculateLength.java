@@ -2,8 +2,6 @@ package ru.artem.project;
 import java.util.*;
 
 public class CalculateLength {
-    private Point point;
-    private OurRectangle ourRectangle;
     private Point pointCenter = new Point(0, 0);
 
     private double V1x;
@@ -30,10 +28,6 @@ public class CalculateLength {
     private double lineParameterVertex41;
     private double lineParameter;
 
-    CalculateLength(Point point, OurRectangle ourRectangle){
-        this.point = point;
-        this.ourRectangle = ourRectangle;
-    }
 
     public boolean checkIsPointInRectangle(Point point, OurRectangle ourRectangle){
         List<Point> pointList = ourRectangle.getAllPoints();

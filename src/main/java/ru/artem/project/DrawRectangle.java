@@ -20,13 +20,13 @@ public class DrawRectangle extends JPanel {
 
     public void paintComponent(Graphics graphics) {
 //    	super.paintComponent(graphics);
-    	System.out.println("Количество прямоугольников: " + rectangles.size());
+//    	System.out.println("Количество прямоугольников: " + rectangles.size());
         for (OurRectangle rectangle : rectangles) {
         	if (!rectangle.isRectangleExist()) {
         		System.out.println("Прямоугольник не существует: " + rectangle);
         		continue;
         	}
-        	System.out.println("Рисую прямоугольник: " + rectangle);
+//        	System.out.println("Рисую прямоугольник: " + rectangle);
             List<Point> points = rectangle.getAllPoints();
             double x0 = Util.transformX(points.get(0).getX(), width);
             double x1 = Util.transformX(points.get(1).getX(), width);
@@ -49,6 +49,6 @@ public class DrawRectangle extends JPanel {
             int numberOfPoints = 4;
             graphics.drawPolygon(xPoints, yPoints, numberOfPoints);
         }
-        System.out.println("нарисовал прямоугольники");
+//        System.out.println("нарисовал прямоугольники");
     }
 }

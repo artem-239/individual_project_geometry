@@ -4,9 +4,9 @@ import java.awt.*;
 import java.util.List;
 
 public class DrawDot extends JPanel {
-    Point point;
-    int width;
-    int height;
+    private Point point;
+    private int width;
+    private int height;
 
 
     public DrawDot(Point point, int width, int height) {

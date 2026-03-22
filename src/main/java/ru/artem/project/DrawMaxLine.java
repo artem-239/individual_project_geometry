@@ -6,9 +6,9 @@ import java.util.List;
 
 public class DrawMaxLine extends JPanel {
 
-    List<Point> intersectionPoints = new ArrayList<>();
-    int width;
-    int height;
+    private List<Point> intersectionPoints = new ArrayList<>();
+    private int width;
+    private int height;
 
     public DrawMaxLine(List<Point> intersectionPoints, int width, int height) {
         this.intersectionPoints = intersectionPoints;

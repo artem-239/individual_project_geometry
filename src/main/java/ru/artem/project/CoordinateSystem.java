@@ -4,8 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class CoordinateSystem extends JPanel {
-    int width;
-    int height;
+	private int width;
+	private int height;
 
     CoordinateSystem(int width, int height){
         this.width = width;
@@ -64,6 +64,6 @@ public class CoordinateSystem extends JPanel {
         
 //        graphics.drawLine(width / 2 - 15, height / 2, width / 2 + 15, height / 2);
         
-        System.out.println("нарисовал систему координат");
+//        System.out.println("нарисовал систему координат");
     }
 }

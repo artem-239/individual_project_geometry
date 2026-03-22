@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DrawLine extends JPanel {
-    int width;
-    int height;
+	private int width;
+    private int height;
 
-    List<Point> onePairCoordinate = new ArrayList<>();
+    private List<Point> onePairCoordinate = new ArrayList<>();
 
     public DrawLine(List<Point> listOfCoordinates, int width, int height) {
         this.onePairCoordinate = listOfCoordinates;
@@ -24,7 +24,7 @@ public class DrawLine extends JPanel {
         for (Point onePairOfCoordinate : onePairCoordinate) {
         	int x = (int) Math.round(Util.transformX(onePairOfCoordinate.getX(), width));
         	int y = (int) Math.round(Util.transformY(onePairOfCoordinate.getY(), height));
-        	System.out.println("Рисую линию к X = " + x + ", Y = " + y);
+//        	System.out.println("Рисую линию к X = " + x + ", Y = " + y);
         	int pointSize = 8;
             graphics.drawLine(width / 2, height / 2, x , y);
             graphics.fillOval(x - pointSize/2, y - pointSize/2, pointSize, pointSize);

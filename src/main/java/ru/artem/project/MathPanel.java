@@ -1,6 +1,8 @@
 package ru.artem.project;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
@@ -11,6 +13,7 @@ public class MathPanel extends JPanel {
     private int height;
     private List<OurRectangle> rectangles = new ArrayList<>();
     private List<Point> onePairCoordinate = new ArrayList<>();
+    private List<Point> mouseRectanglePoints = new ArrayList<>();
     
     public MathPanel(int width, int height) {
     	this.width = width;
@@ -32,6 +35,10 @@ public class MathPanel extends JPanel {
     	//Добавить на панель
     	refresh();
     	paint();
+    }
+    
+    public List<OurRectangle> getAllRectangles() {
+    	return rectangles;
     }
     
     public void deleteRectangle(OurRectangle rectangle) {
@@ -70,8 +77,41 @@ public class MathPanel extends JPanel {
     	paint();
     }
     
+    public List<Point> getAllPoints() {
+    	return onePairCoordinate;
+    }
+    
     public void deleteAllPoints() {
     	onePairCoordinate.clear();
+    	refresh();
+    	paint();
+    	
+    }
+    
+    public void addMouseRectanglePoints(List<Point> points) {
+    	mouseRectanglePoints.addAll(points);
+    	//Добавить на панель
+    	refresh();
+    	paint();
+    }
+    
+    public void addMouseRectanglePoint(Point point) {
+    	mouseRectanglePoints.add(point);
+    	//Добавить на панель
+    	refresh();
+    	paint();
+    	
+    }
+    
+    public void deleteMouseRectanglePoint(Point point) {
+    	mouseRectanglePoints.remove(point);
+    	//Добавить на панель
+    	refresh();
+    	paint();
+    }
+    
+    public void deleteAllMouseRectanglePoints() {
+    	mouseRectanglePoints.clear();
     	refresh();
     	paint();
     	
@@ -84,22 +124,63 @@ public class MathPanel extends JPanel {
     }
 
     public JPanel paint() {
+    	System.out.println("Размер списка точек прямоугольников мыши: " + mouseRectanglePoints.size());
+    	if (mouseRectanglePoints.size() == 3) {
+        	//создаю прямоугольник 
+    		OurRectangle or = new OurRectangle(mouseRectanglePoints.get(0), mouseRectanglePoints.get(1), mouseRectanglePoints.get(2));
+    		if (or.isRectangleExist()) {
+    			rectangles.add(or);
+    		}
+    		mouseRectanglePoints.clear();
+        }
         CoordinateSystem coordinateSystem = new CoordinateSystem(width, height);
-        System.out.println("создал систему координат");
+//        System.out.println("создал систему координат");
         DrawRectangle drawRectangle = new DrawRectangle(width, height, rectangles);
-        System.out.println("Количество прямоугольников в MathPanel: " + rectangles.size()
-        		+ "; hash: " + this.hashCode());
-        System.out.println("создал прямоугольники");
+//        System.out.println("Количество прямоугольников в MathPanel: " + rectangles.size()
+//        		+ "; hash: " + this.hashCode());
+//        System.out.println("создал прямоугольники");
         DrawLine drawLine = new DrawLine(onePairCoordinate, width, height);
-        System.out.println("создал точки");
+//        System.out.println("создал точки");
         
         this.add(drawLine);
         this.add(drawRectangle);
         this.add(coordinateSystem);
         
-//        this.setVisible(true);
+        for (Point mp : mouseRectanglePoints) {
+        	MousePoint mpG = new MousePoint(mp, width, height);
+        	System.out.println("создал точку прямоугольника мыши");
+        	this.add(mpG);
+        }
         
+//        this.setVisible(true);
+        addMouseLabel();
         return this;
+    }
+    
+    private void addMouseLabel() {
+    	JLabel mouseLabel = new JLabel();
+        mouseLabel.setOpaque(true);
+        mouseLabel.setBackground(new Color(255,255,200));
+        mouseLabel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        mouseLabel.setSize(80,20);
+        
+        this.add(mouseLabel);
+        
+        this.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+            	int x = e.getX();
+                int y = e.getY();
+                
+                int realX = Util.backTransformX(x, width);
+                int realY = Util.backTransformY(y, height);
+
+                mouseLabel.setText(realX + ", " + realY);
+
+                // небольшое смещение от курсора
+                mouseLabel.setLocation(x + 10, y + 10);
+            }
+        });
     }
     
     public double makeCalculation() {
@@ -111,7 +192,7 @@ public class MathPanel extends JPanel {
         	System.out.println(">>>>>>>>>>>>>Проверяем прямоугольник: " + rectangle);
             for (Point point : onePairCoordinate){
             	System.out.println(">>>>>>>>>>>>>Проверяем точку: " + point);
-                CalculateLength calculateLength = new CalculateLength(point, rectangle);
+                CalculateLength calculateLength = new CalculateLength();
                 double curLength = calculateLength.getLength(point, rectangle);
                if (curLength > maxLength) {
                    maxLength = curLength;
@@ -124,7 +205,7 @@ public class MathPanel extends JPanel {
         System.out.println(">>>>>>>>>>>>>Найденый прямоугольник: " + curRect);
         System.out.println(">>>>>>>>>>>>>Найденая точка: " + curPoint);
         if (curRect != null){
-            CalculateLength calculateLength = new CalculateLength(curPoint, curRect);
+            CalculateLength calculateLength = new CalculateLength();
             System.out.println(curRect.toString());
             System.out.println("maxLength = " + maxLength);
             List<Point> points = calculateLength.getIntersectionPoints(curPoint, curRect);
