@@ -40,7 +40,7 @@ public class Point extends Point2D {
     }
     
     public String toString() {
-        return String.valueOf(getX()) + ";" + String.valueOf(getY());
+        return String.valueOf((int) Math.round(getX())) + "," + String.valueOf((int) Math.round(getY()));
     }
     
     @Override

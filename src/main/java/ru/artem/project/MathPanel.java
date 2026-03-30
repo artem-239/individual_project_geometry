@@ -11,8 +11,8 @@ public class MathPanel extends JPanel {
 
     private int width;
     private int height;
-    private List<OurRectangle> rectangles = new ArrayList<>();
-    private List<Point> onePairCoordinate = new ArrayList<>();
+    private ArrayList<OurRectangle> rectangles = new ArrayList<>();
+    private ArrayList<Point> onePairCoordinate = new ArrayList<>();
     private List<Point> mouseRectanglePoints = new ArrayList<>();
     
     public MathPanel(int width, int height) {
@@ -37,7 +37,7 @@ public class MathPanel extends JPanel {
     	paint();
     }
     
-    public List<OurRectangle> getAllRectangles() {
+    public ArrayList<OurRectangle> getAllRectangles() {
     	return rectangles;
     }
     
@@ -77,7 +77,7 @@ public class MathPanel extends JPanel {
     	paint();
     }
     
-    public List<Point> getAllPoints() {
+    public ArrayList<Point> getAllPoints() {
     	return onePairCoordinate;
     }
     

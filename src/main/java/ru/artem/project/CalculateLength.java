@@ -3,6 +3,8 @@ import java.util.*;
 
 public class CalculateLength {
     private Point pointCenter = new Point(0, 0);
+    private Point point;
+    private OurRectangle ourRectangle;
 
     private double V1x;
     private double V1y;
@@ -28,6 +30,10 @@ public class CalculateLength {
     private double lineParameterVertex41;
     private double lineParameter;
 
+    private double lineParameter12;
+    private double lineParameter23;
+    private double lineParameter34;
+    private double lineParameter41;
 
     public boolean checkIsPointInRectangle(Point point, OurRectangle ourRectangle){
         List<Point> pointList = ourRectangle.getAllPoints();
@@ -63,12 +69,6 @@ public class CalculateLength {
         double vectorProduct2 = R23x * V2y - R23y * V2x;
         double vectorProduct3 = R34x * V3y - R34y * V3x;
         double vectorProduct4 = R41x * V4y - R41y * V4x;
-
-       /* System.out.println("vectorProduct1 = " + vectorProduct1);
-        System.out.println("vectorProduct2 = " + vectorProduct2);
-        System.out.println("vectorProduct3 = " + vectorProduct3);
-        System.out.println("vectorProduct4 = " + vectorProduct4);
-        */
 
         if (vectorProduct1 >= 0 && vectorProduct2 >= 0 && vectorProduct3 >= 0 && vectorProduct4 >= 0){
             return true;

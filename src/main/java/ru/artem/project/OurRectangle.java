@@ -140,9 +140,9 @@ public class OurRectangle {
     }
 
     public String toString() {
-        return String.valueOf(vertex1.getX()) + ";" + String.valueOf(vertex1.getY())
-        	+ ";" + String.valueOf(vertex2.getX()) + ";" + String.valueOf(vertex2.getY())
-        	+ ";" + String.valueOf(point.getX()) + ";" + String.valueOf(point.getY());
+        return String.valueOf(vertex1.getX()) + "," + String.valueOf(vertex1.getY())
+        	+ ";" + String.valueOf(vertex2.getX()) + "," + String.valueOf(vertex2.getY())
+        	+ ";" + String.valueOf(point.getX()) + "," + String.valueOf(point.getY());
     }
     
     @Override

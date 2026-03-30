@@ -26,7 +26,6 @@ public class DrawRectangle extends JPanel {
         		System.out.println("Прямоугольник не существует: " + rectangle);
         		continue;
         	}
-//        	System.out.println("Рисую прямоугольник: " + rectangle);
             List<Point> points = rectangle.getAllPoints();
             double x0 = Util.transformX(points.get(0).getX(), width);
             double x1 = Util.transformX(points.get(1).getX(), width);

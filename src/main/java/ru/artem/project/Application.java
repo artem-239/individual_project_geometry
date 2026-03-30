@@ -8,8 +8,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -25,7 +27,7 @@ public class Application {
     
     private MathPanel drawingArea;
     
-    private final int FRAME_WIDTH = 1200;
+    private final int FRAME_WIDTH = 1600;
     private final int FRAME_HEIGHT = 900;
     //Треть от общей ширины
     private final int LEFTPANEL_WIDTH = 400;
@@ -39,7 +41,7 @@ public class Application {
     private final int LEFTPANEL_FILECHOOSE_HEIGHT = 50;
     private final int LEFTPANEL_FILERESULTS_HEIGHT = 800;
     //Две трети от общей ширины
-    private final int MATHPANEL_WIDTH = 800;
+    private final int MATHPANEL_WIDTH = 1090;
     private final int MATHPANEL_HEIGHT = 700;
     private final int MATHPANEL_BOTTOM_WIDTH = 800;
     private final int MATHPANEL_BOTTOM_HEIGHT = 200;
@@ -59,7 +61,6 @@ public class Application {
     
 
     public Application() {
-
         frame = new JFrame("Нахождение максимальной длины отрезка");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
@@ -184,7 +185,24 @@ public class Application {
         });
         
         leftPanel.add(buttonPanel, BorderLayout.CENTER);
-        
+
+        JButton dataStorage = new JButton("Сохранить данные");
+        JPanel dataStorageButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        dataStorageButtonPanel.add(dataStorage);
+        dataStorageButtonPanel.setPreferredSize(new Dimension(MATHPANEL_BOTTOM_WIDTH, MATHPANEL_BOTTOM_HEIGHT));
+
+        ArrayList<OurRectangle> rectangles1 = drawingArea.getAllRectangles();
+        ArrayList<Point> points1 = drawingArea.getAllPoints();
+
+
+        dataStorage.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                fileDataStorage(rectangles1, points1);
+            }
+        });
+
+        leftPanel.add(dataStorageButtonPanel, BorderLayout.CENTER);
 
         refresh();
     }
@@ -229,8 +247,7 @@ public class Application {
 	            }
 			}
 		});
-        
-        
+
         filePanel.add(fileField, BorderLayout.CENTER);
         filePanel.add(chooseButton, BorderLayout.EAST);
         
@@ -377,9 +394,6 @@ public class Application {
     private void backToMainMenu() {
     	mouseRectanglesSelect = false;
 		mousePointsSelect = false;
-//    	drawingArea.deleteAllRectangles();
-//    	drawingArea.deleteAllPoints();
-//    	drawingArea.deleteAllMouseRectanglePoints();
     	for (MouseListener ml : drawingArea.getMouseListeners()) {
     		drawingArea.removeMouseListener(ml);
     	}
@@ -627,6 +641,43 @@ public class Application {
             System.out.println(e.getMessage());
         } catch (Exception e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    private void fileDataStorage(ArrayList<OurRectangle> rectangles, ArrayList<Point> points){
+        JFileChooser chooser = new JFileChooser();
+        if (chooser.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
+            dataFileOutput(chooser.getSelectedFile().getAbsolutePath(), rectangles, points);
+        }
+    }
+
+    private void dataFileOutput(String filePath, ArrayList<OurRectangle> rectangles, ArrayList<Point> points){
+        try (BufferedWriter fileWriter = new BufferedWriter(new FileWriter(filePath))) {
+            for (OurRectangle rectangle : rectangles){
+                String rectangleString = rectangle.toString();
+                fileWriter.write(rectangleString);
+                fileWriter.write("\n");
+            }
+            fileWriter.write("#####");
+            fileWriter.write("\n");
+            for (Point point : points){
+                if (points.indexOf(point) < points.size() - 1) {
+                    String pointString = point.toString();
+                    fileWriter.write(pointString);
+                    fileWriter.write("\n");
+                }
+                else {
+                    String pointString = point.toString();
+                    fileWriter.write(pointString);
+                }
+            }
+
+        }
+        catch (FileNotFoundException e){
+
+        }
+        catch (Exception e){
+
         }
     }
     
