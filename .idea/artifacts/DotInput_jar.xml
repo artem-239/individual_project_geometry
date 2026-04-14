@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="DotInput:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/DotInput_jar</output-path>
+    <root id="archive" name="DotInput.jar">
+      <element id="module-output" name="DotInput" />
+    </root>
+  </artifact>
+</component>

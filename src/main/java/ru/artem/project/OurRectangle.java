@@ -34,19 +34,25 @@ public class OurRectangle {
     }
 
     private boolean checkRectangleExist() {
+        //Строим вспомогательный вектор V от точки до 1 вершины
         Vx = point.getX() - vertex1.getX();
         Vy = point.getY() - vertex1.getY();
 
+        //Находим длину линии от 1 вершины до 2
         lengthBetweenVertexX = vertex2.getX() - vertex1.getX();
         lengthBetweenVertexY = vertex2.getY() - vertex1.getY();
         lengthBetweenVertex = Math.sqrt(Math.pow(lengthBetweenVertexX, 2) + Math.pow(lengthBetweenVertexY, 2));
 
+        //ищем скалярное произведение
         dotProduct = (Vx * lengthBetweenVertexX) + (Vy * lengthBetweenVertexY);
 
         parameter = dotProduct / (Math.pow(lengthBetweenVertex, 2));
 
+        //ищем точку перпендикуляра от точки до стороны
         perpendicularX = vertex1.getX() + (vertex2.getX() - vertex1.getX()) * parameter;
         perpendicularY = vertex1.getY() + (vertex2.getY() - vertex1.getY()) * parameter;
+
+        //далее находим длину перпендикуляра
         perpendicularLengthX = perpendicularX - point.getX();
         perpendicularLengthY = perpendicularY - point.getY();
         perpendicularLength = Math.sqrt(Math.pow(perpendicularLengthX, 2) + Math.pow(perpendicularLengthY, 2));
@@ -93,13 +99,13 @@ public class OurRectangle {
     }
 
     private void calculateAngle() {
-        //1 строим направлющий вектор R
+        //строим направлющий вектор R
         lengthBetweenVertexX = vertex2.getX() - vertex1.getX();
         lengthBetweenVertexY = vertex2.getY() - vertex1.getY();
-        //2 строим вспомогательный вектор V
+        //строим вспомогательный вектор V
         Vx = point.getX() - vertex1.getX();
         Vy = point.getY() - vertex1.getY();
-        //3 определяем угол между векторами V и R
+        //определяем угол между векторами V и R
         dotProduct = lengthBetweenVertexX * Vx + Vy * lengthBetweenVertexY;
     }
 

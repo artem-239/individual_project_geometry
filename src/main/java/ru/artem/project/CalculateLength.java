@@ -41,6 +41,8 @@ public class CalculateLength {
          Point vertex2 = pointList.get(1);
          Point vertex3 = pointList.get(2);
          Point vertex4 = pointList.get(3);
+
+         //Строим вектора от точки до вершин
         V1x = point.getX() - vertex1.getX();
         V1y = point.getY() - vertex1.getY();
 
@@ -53,6 +55,7 @@ public class CalculateLength {
         V4x = point.getX() - vertex4.getX();
         V4y = point.getY() - vertex4.getY();
 
+        //Находим их длину
         R12x = vertex2.getX() - vertex1.getX();
         R12y = vertex2.getY() - vertex1.getY();
 
@@ -94,7 +97,11 @@ public class CalculateLength {
 
         double lineLength = 0;
 
+        /*
+        начальная и конечная точки лежат внутри прямоугольника
+         */
         if (checkIsPointInRectangle(pointCenter, ourRectangle) && checkIsPointInRectangle(point, ourRectangle)) {
+            //Длина - просто наш отрезок
             double lineLengthX = point.getX() - pointCenter.getX();
             double lineLengthY = point.getY() - pointCenter.getY();
 
@@ -106,19 +113,25 @@ public class CalculateLength {
          центральная точка лежит, точка не лежит
          */
         if (checkIsPointInRectangle(pointCenter, ourRectangle) && !checkIsPointInRectangle(point, ourRectangle)) {
+            //Ищем длину отрезка
             double ourLineLengthX = point.getX() - pointCenter.getX();
             double ourLineLengthY = point.getY() - pointCenter.getY();
 
+            //Ищем длину стороны образованной 1 и 2 вершиной
             R12x = vertex2.getX() - vertex1.getX();
             R12y = vertex2.getY() - vertex1.getY();
-
+            //Ищем определитель системы
             double DD = -1 * ourLineLengthX * R12y + ourLineLengthY * R12x;
 
+            //Ищем частные определители
             double DA = -1 * (vertex1.getX() - pointCenter.getX()) * R12y + (vertex1.getY() - pointCenter.getY()) * R12x;
             double DB = ourLineLengthX * (vertex1.getY() - pointCenter.getY()) - ourLineLengthY * (vertex1.getX() - pointCenter.getX());
+
+            //Ищем параметр точки пересечения отрезка и стороны
             lineParameter = DA / DD;
             lineParameterVertex12 = DB / DD;
 
+            //проверка того, что пересекаются отрезки, а не линии, нахождение длины пересечения
             if (lineParameter > 0 && lineParameter < 1 && lineParameterVertex12 >= 0 && lineParameterVertex12 <= 1) {
                 double pX = pointCenter.getX() + lineParameter * ourLineLengthX;
                 double pY = pointCenter.getY() + lineParameter * ourLineLengthY;
@@ -267,9 +280,10 @@ public class CalculateLength {
                 return lineLength;
             }
         }
-        //начало и конец линии не лежат внутри прямоугольника
 
+        //начало и конец линии не лежат внутри прямоугольника
         if (!checkIsPointInRectangle(pointCenter, ourRectangle) && !checkIsPointInRectangle(point, ourRectangle)) {
+            //Создание хранилища точек пересечения, так как незнаем с какой стороной пересекается отрезок и пересекается ли
             Map<Integer, String> mapCache = new HashMap<Integer, String>();
             double ourLineLengthX = point.getX() - pointCenter.getX();
             double ourLineLengthY = point.getY() - pointCenter.getY();
@@ -318,6 +332,8 @@ public class CalculateLength {
             System.out.println("lineParameterVertex23 = " + lineParameterVertex23);
             System.out.println("lineParameter = " + lineParameter);
 
+
+            //Находим, является ли точка пересечения точкой соединения сторон прямоугольника, если да, то не учитываем ее, так как учли ее ранее
             if (lineParameter > 0 && lineParameter < 1 && lineParameterVertex23 >= 0 && lineParameterVertex23 <= 1 && !(lineParameterVertex12 == 1 && lineParameterVertex23 == 0)) {
                 double pX = pointCenter.getX() + lineParameter * ourLineLengthX;
                 double pY = pointCenter.getY() + lineParameter * ourLineLengthY;
@@ -414,7 +430,9 @@ public class CalculateLength {
 
          List<Point> points = new ArrayList<>();
 
-
+         /*
+         Начальная и конечная точки лежат внутри прямоугольника
+          */
          if (checkIsPointInRectangle(pointCenter, ourRectangle) && checkIsPointInRectangle(point, ourRectangle)) {
             points.add(point);
             points.add(pointCenter);
@@ -424,6 +442,7 @@ public class CalculateLength {
          центральная точка лежит, точка не лежит
          */
 
+         //Начальная точка лежит, конечная нет
          if (checkIsPointInRectangle(pointCenter, ourRectangle) && !checkIsPointInRectangle(point, ourRectangle)) {
              double ourLineLengthX = point.getX() - pointCenter.getX();
              double ourLineLengthY = point.getY() - pointCenter.getY();
@@ -505,7 +524,7 @@ public class CalculateLength {
              }
          }
          /**
-          * центральная точка не лежит, точка лежит
+          * центральная точка не лежит внутри прямоугольника, конечная точка лежит внутри прямоугольника
           */
          if (!checkIsPointInRectangle(pointCenter, ourRectangle) && checkIsPointInRectangle(point, ourRectangle)) {
              double ourLineLengthX = point.getX() - pointCenter.getX();
@@ -586,8 +605,7 @@ public class CalculateLength {
                  return points;
              }
          }
-         //начало и конец линии не лежат внутри прямоугольника
-
+         //начальная и конечная точки не лежат внутри прямоугольника
          if (!checkIsPointInRectangle(pointCenter, ourRectangle) && !checkIsPointInRectangle(point, ourRectangle)) {
              Map<Integer, String> mapCache = new HashMap<Integer, String>();
              double ourLineLengthX = point.getX() - pointCenter.getX();

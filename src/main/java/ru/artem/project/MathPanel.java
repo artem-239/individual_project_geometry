@@ -187,24 +187,31 @@ public class MathPanel extends JPanel {
     	double maxLength = 0;
         OurRectangle curRect = null;
         Point curPoint = null;
+        int maxLengthCounter = 0;
 
         for (OurRectangle rectangle : rectangles){
-        	System.out.println(">>>>>>>>>>>>>Проверяем прямоугольник: " + rectangle);
             for (Point point : onePairCoordinate){
-            	System.out.println(">>>>>>>>>>>>>Проверяем точку: " + point);
                 CalculateLength calculateLength = new CalculateLength();
                 double curLength = calculateLength.getLength(point, rectangle);
                if (curLength > maxLength) {
                    maxLength = curLength;
                    curRect = rectangle;
                    curPoint = point;
-
                }
             }
         }
-        System.out.println(">>>>>>>>>>>>>Найденый прямоугольник: " + curRect);
-        System.out.println(">>>>>>>>>>>>>Найденая точка: " + curPoint);
-        if (curRect != null){
+
+        for (OurRectangle rectangle : rectangles){
+            for (Point point : onePairCoordinate){
+                CalculateLength calculateLength = new CalculateLength();
+                double curLength = calculateLength.getLength(point, rectangle);
+                if (curLength == maxLength) {
+                    maxLengthCounter++;
+                }
+            }
+        }
+
+        if (curRect != null && maxLengthCounter == 1){
             CalculateLength calculateLength = new CalculateLength();
             System.out.println(curRect.toString());
             System.out.println("maxLength = " + maxLength);
@@ -224,8 +231,8 @@ public class MathPanel extends JPanel {
             this.add(drawMaxLine);
             this.setVisible(true);
         }
-        else {
-            System.out.println("нет пересечений");
+        else if (maxLengthCounter > 1){
+            maxLength = 0;
         }
         return maxLength;
     }
