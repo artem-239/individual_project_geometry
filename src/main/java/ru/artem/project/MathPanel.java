@@ -6,7 +6,7 @@ import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
-
+//класс для работы с панелью отрисовки фигур
 public class MathPanel extends JPanel {
 
     private int width;
@@ -156,7 +156,7 @@ public class MathPanel extends JPanel {
         addMouseLabel();
         return this;
     }
-    
+    //Добавление строчки с координатами, которые меняются при перемещении мыши по экрану
     private void addMouseLabel() {
     	JLabel mouseLabel = new JLabel();
         mouseLabel.setOpaque(true);
@@ -182,7 +182,7 @@ public class MathPanel extends JPanel {
             }
         });
     }
-    
+    //расчет максимальной длины пересечения с помощью цикла
     public double makeCalculation() {
     	double maxLength = 0;
         OurRectangle curRect = null;
@@ -237,7 +237,3 @@ public class MathPanel extends JPanel {
         return maxLength;
     }
 }
-
-
-
-

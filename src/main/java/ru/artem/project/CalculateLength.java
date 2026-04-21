@@ -133,27 +133,36 @@ public class CalculateLength {
 
             //проверка того, что пересекаются отрезки, а не линии, нахождение длины пересечения
             if (lineParameter > 0 && lineParameter < 1 && lineParameterVertex12 >= 0 && lineParameterVertex12 <= 1) {
+                //Ищем координаты 1 точки
                 double pX = pointCenter.getX() + lineParameter * ourLineLengthX;
                 double pY = pointCenter.getY() + lineParameter * ourLineLengthY;
+                //Вторая точка это точка центра
                 double lineLengthX = pX - pointCenter.getX();
                 double lineLengthY = pY - pointCenter.getY();
                 lineLength = Math.sqrt(Math.pow(lineLengthX, 2) + Math.pow(lineLengthY, 2));
                 return lineLength;
             }
 
+            //Ищем длину стороны образованной 2 и 3 вершиной
             R23x = vertex3.getX() - vertex2.getX();
             R23y = vertex3.getY() - vertex2.getY();
 
+            //Ищем определитель системы
             DD = -1 * ourLineLengthX * R23y + ourLineLengthY * R23x;
+
+            //Ищем частные определители
             DA = -1 * (vertex2.getX() - pointCenter.getX()) * R23y + (vertex2.getY() - pointCenter.getY()) * R23x;
             DB = ourLineLengthX * (vertex2.getY() - pointCenter.getY()) - ourLineLengthY * (vertex2.getX() - pointCenter.getX());
 
+            //Ищем параметр точки пересечения отрезка и стороны
             lineParameter = DA / DD;
             lineParameterVertex23 = DB / DD;
 
             if (lineParameter > 0 && lineParameter < 1 && lineParameterVertex23 >= 0 && lineParameterVertex23 <= 1) {
+                //Ищем координаты 1 точки
                 double pX = pointCenter.getX() + lineParameter * ourLineLengthX;
                 double pY = pointCenter.getY() + lineParameter * ourLineLengthY;
+                //Вторая точка это точка центра
                 double lineLengthX = pX - pointCenter.getX();
                 double lineLengthY = pY - pointCenter.getY();
                 lineLength = Math.sqrt(Math.pow(lineLengthX, 2) + Math.pow(lineLengthY, 2));
@@ -170,9 +179,12 @@ public class CalculateLength {
             lineParameter = DA / DD;
             lineParameterVertex34 = DB / DD;
 
+            //проверка того, что пересекаются отрезки, а не линии, нахождение длины пересечения
             if (lineParameter > 0 && lineParameter < 1 && lineParameterVertex34 >= 0 && lineParameterVertex34 <= 1) {
+                //Ищем координаты 1 точки
                 double pX = pointCenter.getX() + lineParameter * ourLineLengthX;
                 double pY = pointCenter.getY() + lineParameter * ourLineLengthY;
+                //Вторая точка это точка центра
                 double lineLengthX = pX - pointCenter.getX();
                 double lineLengthY = pY - pointCenter.getY();
                 lineLength = Math.sqrt(Math.pow(lineLengthX, 2) + Math.pow(lineLengthY, 2));
@@ -190,8 +202,10 @@ public class CalculateLength {
             lineParameterVertex41 = DB / DD;
 
             if (lineParameter > 0 && lineParameter < 1 && lineParameterVertex41 >= 0 && lineParameterVertex41 <= 1) {
+                //Ищем координаты 1 точки
                 double pX = pointCenter.getX() + lineParameter * ourLineLengthX;
                 double pY = pointCenter.getY() + lineParameter * ourLineLengthY;
+                //Вторая точка это точка центра
                 double lineLengthX = pX - pointCenter.getX();
                 double lineLengthY = pY - pointCenter.getY();
                 lineLength = Math.sqrt(Math.pow(lineLengthX, 2) + Math.pow(lineLengthY, 2));
@@ -215,8 +229,10 @@ public class CalculateLength {
             lineParameterVertex12 = DB / DD;
 
             if (lineParameter > 0 && lineParameter < 1 && lineParameterVertex12 >= 0 && lineParameterVertex12 <= 1) {
+                //Ищем координаты 1 точки
                 double pX = pointCenter.getX() + lineParameter * ourLineLengthX;
                 double pY = pointCenter.getY() + lineParameter * ourLineLengthY;
+                //Вторая точка - конечная точка
                 double lineLengthX = point.getX() - pX;
                 double lineLengthY = point.getY() - pY;
                 lineLength = Math.sqrt(Math.pow(lineLengthX, 2) + Math.pow(lineLengthY, 2));
@@ -234,8 +250,10 @@ public class CalculateLength {
             lineParameterVertex23 = DB / DD;
 
             if (lineParameter > 0 && lineParameter < 1 && lineParameterVertex23 >= 0 && lineParameterVertex23 <= 1) {
+                //Ищем координаты 1 точки
                 double pX = pointCenter.getX() + lineParameter * ourLineLengthX;
                 double pY = pointCenter.getY() + lineParameter * ourLineLengthY;
+                //Вторая точка - конечная точка
                 double lineLengthX = point.getX() - pX;
                 double lineLengthY = point.getY() - pY;
                 lineLength = Math.sqrt(Math.pow(lineLengthX, 2) + Math.pow(lineLengthY, 2));
@@ -253,8 +271,10 @@ public class CalculateLength {
             lineParameterVertex34 = DB / DD;
 
             if (lineParameter > 0 && lineParameter < 1 && lineParameterVertex34 >= 0 && lineParameterVertex34 <= 1) {
+                //Ищем координаты 1 точки
                 double pX = pointCenter.getX() + lineParameter * ourLineLengthX;
                 double pY = pointCenter.getY() + lineParameter * ourLineLengthY;
+                //Вторая точка - конечная точка
                 double lineLengthX = point.getX() - pX;
                 double lineLengthY = point.getY() - pY;
                 lineLength = Math.sqrt(Math.pow(lineLengthX, 2) + Math.pow(lineLengthY, 2));
@@ -272,8 +292,10 @@ public class CalculateLength {
             lineParameterVertex41 = DB / DD;
 
             if (lineParameter > 0 && lineParameter < 1 && lineParameterVertex41 >= 0 && lineParameterVertex41 <= 1) {
+                //Ищем координаты 1 точки
                 double pX = pointCenter.getX() + lineParameter * ourLineLengthX;
                 double pY = pointCenter.getY() + lineParameter * ourLineLengthY;
+                //Вторая точка - конечная точка
                 double lineLengthX = point.getX() - pX;
                 double lineLengthY = point.getY() - pY;
                 lineLength = Math.sqrt(Math.pow(lineLengthX, 2) + Math.pow(lineLengthY, 2));
@@ -288,40 +310,26 @@ public class CalculateLength {
             double ourLineLengthX = point.getX() - pointCenter.getX();
             double ourLineLengthY = point.getY() - pointCenter.getY();
 
-            System.out.println("ourLineLengthX = " + ourLineLengthX);
-            System.out.println("ourLineLengthY = " + ourLineLengthY);
-
             R12x = vertex2.getX() - vertex1.getX();
             R12y = vertex2.getY() - vertex1.getY();
 
-            System.out.println("R12x = " + R12x);
-            System.out.println("R12y = " + R12y);
-
             double DD = -1 * ourLineLengthX * R12y + ourLineLengthY * R12x;
-            System.out.println("DD = " + DD);
             double DA = -1 * (vertex1.getX() - pointCenter.getX()) * R12y + (vertex1.getY() - pointCenter.getY()) * R12x;
             double DB = ourLineLengthX * (vertex1.getY() - pointCenter.getY()) - ourLineLengthY * (vertex1.getX() - pointCenter.getX());
 
-            System.out.println("DA = " + DA);
-            System.out.println("DB = " + DB);
             lineParameter = DA / DD;
-            System.out.println("lineParameter = " + lineParameter);
             lineParameterVertex12 = DB / DD;
-            System.out.println("lineParameterVertex12 = " + lineParameterVertex12);
 
             if (lineParameter > 0 && lineParameter < 1 && lineParameterVertex12 >= 0 && lineParameterVertex12 <= 1) {
+                //Ищем координаты точек пересечения
                 double p1X = pointCenter.getX() + lineParameter * ourLineLengthX;
                 double p1Y = pointCenter.getY() + lineParameter * ourLineLengthY;
+                //Заносим в мапу
                 mapCache.put(1, String.valueOf(p1X) + "; " + String.valueOf(p1Y));
-                System.out.println("e");
-
             }
 
             R23x = vertex3.getX() - vertex2.getX();
             R23y = vertex3.getY() - vertex2.getY();
-
-            System.out.println("R23x = " + R23x);
-            System.out.println("R23y = " + R23y);
 
             DD = -1 * ourLineLengthX * R23y + ourLineLengthY * R23x;
             DA = -1 * (vertex2.getX() - pointCenter.getX()) * R23y + (vertex2.getY() - pointCenter.getY()) * R23x;
@@ -329,14 +337,13 @@ public class CalculateLength {
 
             lineParameter = DA / DD;
             lineParameterVertex23 = DB / DD;
-            System.out.println("lineParameterVertex23 = " + lineParameterVertex23);
-            System.out.println("lineParameter = " + lineParameter);
-
 
             //Находим, является ли точка пересечения точкой соединения сторон прямоугольника, если да, то не учитываем ее, так как учли ее ранее
             if (lineParameter > 0 && lineParameter < 1 && lineParameterVertex23 >= 0 && lineParameterVertex23 <= 1 && !(lineParameterVertex12 == 1 && lineParameterVertex23 == 0)) {
+                //Ищем координаты точек пересечения
                 double pX = pointCenter.getX() + lineParameter * ourLineLengthX;
                 double pY = pointCenter.getY() + lineParameter * ourLineLengthY;
+                //Заносим в мапу
                 if (!mapCache.isEmpty()) {
                     mapCache.put(2, String.valueOf(pX) + "; " + String.valueOf(pY));
                 } else {
@@ -347,24 +354,18 @@ public class CalculateLength {
             R34x = vertex4.getX() - vertex3.getX();
             R34y = vertex4.getY() - vertex3.getY();
 
-            System.out.println("R34x = " + R34x);
-            System.out.println("R34y = " + R34y);
-
             DD = -1 * ourLineLengthX * R34y + ourLineLengthY * R34x;
             DA = -1 * (vertex3.getX() - pointCenter.getX()) * R34y + (vertex3.getY() - pointCenter.getY()) * R34x;
             DB = ourLineLengthX * (vertex3.getY() - pointCenter.getY()) - ourLineLengthY * (vertex3.getX() - pointCenter.getX());
 
             lineParameter = DA / DD;
             lineParameterVertex34 = DB / DD;
-            System.out.println("DA34 = " + DA);
-            System.out.println("DB34 = " + DB);
-            System.out.println("DD34 = " + DD);
-            System.out.println("lineParameterVertex34 = " + lineParameterVertex34);
-            System.out.println("lineParameter = " + lineParameter);
 
             if (lineParameter > 0 && lineParameter < 1 && lineParameterVertex34 >= 0 && lineParameterVertex34 <= 1 && !(lineParameterVertex23 == 1 && lineParameterVertex34 == 0)) {
+                //Ищем координаты точек пересечения
                 double pX = pointCenter.getX() + lineParameter * ourLineLengthX;
                 double pY = pointCenter.getY() + lineParameter * ourLineLengthY;
+                //Заносим в мапу
                 if (!mapCache.isEmpty()) {
                     mapCache.put(2, String.valueOf(pX) + "; " + String.valueOf(pY));
                 } else {
@@ -381,14 +382,12 @@ public class CalculateLength {
 
             lineParameter = DA / DD;
             lineParameterVertex41 = DB / DD;
-            System.out.println("DA41 = " + DA);
-            System.out.println("DB41 = " + DB);
-            System.out.println("DD41 = " + DD);
-            System.out.println("lineParameterVertex41 = " + lineParameterVertex41);
 
             if (lineParameter > 0 && lineParameter < 1 && lineParameterVertex41 >= 0 && lineParameterVertex41 <= 1 && !(lineParameterVertex34 == 1 && lineParameterVertex41 == 0) && !(lineParameterVertex12 == 0 && lineParameterVertex41 == 1)) {
+                //Ищем координаты точек пересечения
                 double pX = pointCenter.getX() + lineParameter * ourLineLengthX;
                 double pY = pointCenter.getY() + lineParameter * ourLineLengthY;
+                //Заносим в мапу
                 if (!mapCache.isEmpty()) {
                     mapCache.put(2, String.valueOf(pX) + "; " + String.valueOf(pY));
                 } else {

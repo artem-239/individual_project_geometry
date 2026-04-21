@@ -130,7 +130,6 @@ public class Application {
     }
 
     /* ---------------- левая панель - управление и ввод данных ---------------- */
-
     private void showRadioSelection() {
 
         leftPanel.removeAll();
@@ -368,14 +367,15 @@ public class Application {
 
         refresh();
     }
-    
+    //Удаление всех фигур
     private void deleteAllFigures() {
     	drawingArea.deleteAllRectangles();
     	drawingArea.deleteAllPoints();
+        rectangles.clear();
+        onePairCoordinate.clear();
     }
     
     /* ---------- левая панель: выход в главное меню ---------- */
-    
     private JPanel createReturnPanel() {
     	JPanel panel = new JPanel(new BorderLayout());
     	panel.setPreferredSize(new Dimension(LEFTPANEL_RETURN_WIDTH, LEFTPANEL_RETURN_HEIGHT));
@@ -402,7 +402,6 @@ public class Application {
     }
 
     /* ---------- левая панель: создание прямоугольников ---------- */
-
     private JPanel createRectanglesPanel() {
 
         JPanel panel = new JPanel(new BorderLayout());
@@ -433,7 +432,6 @@ public class Application {
     }
 
     /* ---------- левая панель: точки ---------- */
-
     private JPanel createPointsPanel() {
 
         JPanel panel = new JPanel(new BorderLayout());
@@ -463,7 +461,6 @@ public class Application {
     }
 
     /* ---------- лева панель: ряды в прямоугольниках ---------- */
-
     private void addRectangleRow() {
 
         JPanel row = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -528,7 +525,6 @@ public class Application {
 			}
 		});
 
-//        row.add(label);
         row.add(l1);
         row.add(f1);
         row.add(l2);
@@ -590,12 +586,15 @@ public class Application {
         refreshContainer(pointsContainer);
     }
 
+    //Создание текстового поля
     private JTextField createField() {
         JTextField f = new JTextField();
         f.setPreferredSize(new Dimension(TEXTFIELDS_WIDTH, TEXTFIELDS_HEIGHT));
         return f;
     }
 
+
+    //Обновление структуры и перерисовывание панели
     private void refreshContainer(JPanel panel) {
         panel.revalidate();
         panel.repaint();
@@ -605,7 +604,8 @@ public class Application {
         leftPanel.revalidate();
         leftPanel.repaint();
     }
-    
+
+    //Ввод данных с файла
     private void dataFileInput(String filePath) {
         try {
         	fileResults.clear();
@@ -643,16 +643,16 @@ public class Application {
             System.out.println(e.getMessage());
         }
     }
-
-    private void fileDataStorage(ArrayList<OurRectangle> rectangles, ArrayList<Point> points){
+    //Выбор файла для записи
+    private void fileDataStorage(ArrayList<OurRectangle> rectangles, ArrayList<Point> points) {
         JFileChooser chooser = new JFileChooser();
         if (chooser.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
             dataFileOutput(chooser.getSelectedFile().getAbsolutePath(), rectangles, points);
         }
     }
-
-    private void dataFileOutput(String filePath, ArrayList<OurRectangle> rectangles, ArrayList<Point> points){
-        try (BufferedWriter fileWriter = new BufferedWriter(new FileWriter(filePath))) {
+    //Запись в файл
+    private void dataFileOutput(String filePath, ArrayList<OurRectangle> rectangles, ArrayList<Point> points) {
+        try (BufferedWriter fileWriter = new BufferedWriter(new FileWriter(filePath, false))) {
             for (OurRectangle rectangle : rectangles){
                 String rectangleString = rectangle.toString();
                 fileWriter.write(rectangleString);
@@ -680,7 +680,7 @@ public class Application {
 
         }
     }
-    
+    //Создание прямоугольника по введенным координатам
     private OurRectangle createRectangle(String coordinates) {
         StringTokenizer tokenizer = new StringTokenizer(coordinates, ";");
         Point vertex1 = new Point(tokenizer.nextToken());
@@ -689,7 +689,7 @@ public class Application {
         OurRectangle rectangle = new OurRectangle(vertex1, vertex2, point3);
         return rectangle;
     }
-    
+    //Создание точки по введенным координатам
     private Point createPoint(String coordinates) {
         StringTokenizer tokenizer = new StringTokenizer(coordinates, ",");
         int x = Integer.parseInt(tokenizer.nextToken());

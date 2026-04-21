@@ -7,7 +7,7 @@ import java.awt.geom.Point2D;
 import java.util.StringTokenizer;
 
 import javax.swing.JPanel;
-
+//Панель для отрисовки точек при ввода данных мышью и отрисовки первичных точек прямоугольника
 public class MousePoint extends JPanel {
 	private int x;
 	private int y;
@@ -19,7 +19,6 @@ public class MousePoint extends JPanel {
 		
 		System.out.println(">>>>>>>добавил точку мыши: " + x + ", " + y);
 		this.setBounds(0, 0, width, height);
-//      this.setPreferredSize(new Dimension(width, height));
 		setOpaque(false);
 	}
 
@@ -33,8 +32,6 @@ public class MousePoint extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		drawPoint((Graphics2D) g, x, y);
-//		System.out.println("нарисовал точки мыши");
-		
 	}
 
 	private void drawPoint(Graphics2D g2, int x, int y) {
