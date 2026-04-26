@@ -4,24 +4,43 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OurRectangle {
+    //Вершина 1
     private Point vertex1;
+    //Вершина 2
     private Point vertex2;
+    //Вершина 3
     private Point vertex3;
+    //Вершина 4
     private Point vertex4;
+    //буффер для смены вершин 1 и 2, в случае, если не выполнено условие обхода против часовой стрелки
     private Point vertexBuffer;
+    //Точка, лежащая на прямой, проходящей через 2 противоположенные вершины к данным(точка)
     private Point point;
+    //Длина векторы, построенного от точки до вершины 1 по х
     private double Vx;
+    //Длина векторы, построенного от точки до вершины 1 по у
     private double Vy;
+    //Длина стороны, образованной 1 и 2 вершиной
     private double lengthBetweenVertex;
+    //Скалярное произведение векторов V и R
     private double dotProduct;
+    //Длина стороны, образованной 1 и 2 вершиной по х(длина вектора R по х)
     private double lengthBetweenVertexX;
+    //Длина стороны, образованной 1 и 2 вершиной по у(длина вектора R по у)
     private double lengthBetweenVertexY;
+    //Параметр точки перпендикуляра от точки до прямой, проходящей через 1 и 2 вершины
     private double parameter;
+    //Длина перпендикуляра от точки до стороны, образованной вершинами 1 и 2 по х
     private double perpendicularLengthX;
+    //Длина перпендикуляра от точки до стороны, образованной вершинами 1 и 2 по у
     private double perpendicularLengthY;
+    //Длина перпендикуляра от точки до стороны, образованной вершинами 1 и 2
     private double perpendicularLength;
+    //Координата точки перпендикуляра на прямой, образованной вершинами 1 и 2 по х
     private double perpendicularX;
+    //Координата точки перпендикуляра на прямой, образованной вершинами 1 и 2 по у
     private double perpendicularY;
+    //Переменная для определения существования прямоугольника
     private boolean isRectangleExist = true;
     private double vectorProduct;
 
@@ -49,8 +68,8 @@ public class OurRectangle {
         parameter = dotProduct / (Math.pow(lengthBetweenVertex, 2));
 
         //ищем точку перпендикуляра от точки до стороны
-        perpendicularX = vertex1.getX() + (vertex2.getX() - vertex1.getX()) * parameter;
-        perpendicularY = vertex1.getY() + (vertex2.getY() - vertex1.getY()) * parameter;
+        perpendicularX = vertex1.getX() + lengthBetweenVertexX * parameter;
+        perpendicularY = vertex1.getY() + lengthBetweenVertexY * parameter;
 
         //далее находим длину перпендикуляра
         perpendicularLengthX = perpendicularX - point.getX();

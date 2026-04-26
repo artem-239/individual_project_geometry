@@ -2,38 +2,62 @@ package ru.artem.project;
 import java.util.*;
 
 public class CalculateLength {
+    //Начальная точка(центр координат)
     private Point pointCenter = new Point(0, 0);
+    //Точка, по которой строим отрезок
     private Point point;
+    //Наш прямоугольник
     private OurRectangle ourRectangle;
 
+    //Длина вектора, построенного от точки, по которой строим отрезок до вершины 1 по х
     private double V1x;
+    //Длина вектора, построенного от точки, по которой строим отрезок до вершины 1 по у
     private double V1y;
+    //Длина вектора, построенного от точки, по которой строим отрезок до вершины 2 по х
     private double V2x;
+    //Длина вектора, построенного от точки, по которой строим отрезок до вершины 2 по у
     private double V2y;
+    //Длина вектора, построенного от точки, по которой строим отрезок до вершины 3 по х
     private double V3x;
+    //Длина вектора, построенного от точки, по которой строим отрезок до вершины 3 по у
     private double V3y;
+    //Длина вектора, построенного от точки, по которой строим отрезок до вершины 4 по х
     private double V4x;
+    //Длина вектора, построенного от точки, по которой строим отрезок до вершины 4 по у
     private double V4y;
 
+    //Длина стороны. образованной вершинами 1 и 2 по х
     private double R12x;
+    //Длина стороны. образованной вершинами 1 и 2 по у
     private double R12y;
+    //Длина стороны. образованной вершинами 2 и 3 по х
     private double R23x;
+    //Длина стороны. образованной вершинами 2 и 3 по у
     private double R23y;
+    //Длина стороны. образованной вершинами 3 и 4 по х
     private double R34x;
+    //Длина стороны. образованной вершинами 3 и 4 по у
     private double R34y;
+    //Длина стороны. образованной вершинами 4 и 1 по х
     private double R41x;
+    //Длина стороны. образованной вершинами 4 и 1 по у
     private double R41y;
 
+    //параметр точки пересечения отрезка со стороной прямоугольника, образованной вершинами 1 и 2, стороны прямоугольника, образованной вершинами 1 и 2
     private double lineParameterVertex12;
+    //параметр точки пересечения отрезка со стороной прямоугольника, образованной вершинами 2 и 3, стороны прямоугольника, образованной вершинами 2 и 3
     private double lineParameterVertex23;
+    //параметр точки пересечения отрезка со стороной прямоугольника, образованной вершинами 3 и 4, стороны прямоугольника, образованной вершинами 3 и 4
     private double lineParameterVertex34;
+    //параметр точки пересечения отрезка со стороной прямоугольника, образованной вершинами 4 и 1, стороны прямоугольника, образованной вершинами 4 и 1
     private double lineParameterVertex41;
+    //параметр точки пересечения отрезка со стороной прямоугольника(не стал создавать отдельные переменные для параметр отрезка с каждой стороной, меняю эту переменную каждый раз при поиски пересечения с каждой стороной), отрезка
     private double lineParameter;
 
-    private double lineParameter12;
-    private double lineParameter23;
-    private double lineParameter34;
-    private double lineParameter41;
+    //Длина отрезка по х
+    private double ourLineLengthX;
+    //Длина отрезка по у
+    private double ourLineLengthY;
 
     public boolean checkIsPointInRectangle(Point point, OurRectangle ourRectangle){
         List<Point> pointList = ourRectangle.getAllPoints();
@@ -95,13 +119,33 @@ public class CalculateLength {
         Point vertex3 = pointList.get(2);
         Point vertex4 = pointList.get(3);
 
+        //Ищем длину нашего отрезка
+        ourLineLengthX = point.getX() - pointCenter.getX();
+        ourLineLengthY = point.getY() - pointCenter.getY();
+
+        //Ищем длину стороны образованной 1 и 2 вершиной
+        R12x = vertex2.getX() - vertex1.getX();
+        R12y = vertex2.getY() - vertex1.getY();
+
+        //Ищем длину стороны образованной 2 и 3 вершиной
+        R23x = vertex3.getX() - vertex2.getX();
+        R23y = vertex3.getY() - vertex2.getY();
+
+        //Ищем длину стороны образованной 3 и 4 вершиной
+        R34x = vertex4.getX() - vertex3.getX();
+        R34y = vertex4.getY() - vertex3.getY();
+
+        //Ищем длину стороны образованной 4 и 1 вершиной
+        R41x = vertex1.getX() - vertex4.getX();
+        R41y = vertex1.getY() - vertex4.getY();
+
         double lineLength = 0;
 
         /*
         начальная и конечная точки лежат внутри прямоугольника
          */
         if (checkIsPointInRectangle(pointCenter, ourRectangle) && checkIsPointInRectangle(point, ourRectangle)) {
-            //Длина - просто наш отрезок
+            //Пересечение - просто наш отрезок
             double lineLengthX = point.getX() - pointCenter.getX();
             double lineLengthY = point.getY() - pointCenter.getY();
 
@@ -113,13 +157,6 @@ public class CalculateLength {
          центральная точка лежит, точка не лежит
          */
         if (checkIsPointInRectangle(pointCenter, ourRectangle) && !checkIsPointInRectangle(point, ourRectangle)) {
-            //Ищем длину отрезка
-            double ourLineLengthX = point.getX() - pointCenter.getX();
-            double ourLineLengthY = point.getY() - pointCenter.getY();
-
-            //Ищем длину стороны образованной 1 и 2 вершиной
-            R12x = vertex2.getX() - vertex1.getX();
-            R12y = vertex2.getY() - vertex1.getY();
             //Ищем определитель системы
             double DD = -1 * ourLineLengthX * R12y + ourLineLengthY * R12x;
 
@@ -143,10 +180,6 @@ public class CalculateLength {
                 return lineLength;
             }
 
-            //Ищем длину стороны образованной 2 и 3 вершиной
-            R23x = vertex3.getX() - vertex2.getX();
-            R23y = vertex3.getY() - vertex2.getY();
-
             //Ищем определитель системы
             DD = -1 * ourLineLengthX * R23y + ourLineLengthY * R23x;
 
@@ -168,9 +201,6 @@ public class CalculateLength {
                 lineLength = Math.sqrt(Math.pow(lineLengthX, 2) + Math.pow(lineLengthY, 2));
                 return lineLength;
             }
-
-            R34x = vertex4.getX() - vertex3.getX();
-            R34y = vertex4.getY() - vertex3.getY();
 
             DD = -1 * ourLineLengthX * R34y + ourLineLengthY * R34x;
             DA = -1 * (vertex3.getX() - pointCenter.getX()) * R34y + (vertex3.getY() - pointCenter.getY()) * R34x;
@@ -216,12 +246,6 @@ public class CalculateLength {
          * центральная точка не лежит, точка лежит
          */
         if (!checkIsPointInRectangle(pointCenter, ourRectangle) && checkIsPointInRectangle(point, ourRectangle)) {
-            double ourLineLengthX = point.getX() - pointCenter.getX();
-            double ourLineLengthY = point.getY() - pointCenter.getY();
-
-            R12x = vertex2.getX() - vertex1.getX();
-            R12y = vertex2.getY() - vertex1.getY();
-
             double DD = -1 * ourLineLengthX * R12y + ourLineLengthY * R12x;
             double DA = -1 * (vertex1.getX() - pointCenter.getX()) * R12y + (vertex1.getY() - pointCenter.getY()) * R12x;
             double DB = ourLineLengthX * (vertex1.getY() - pointCenter.getY()) - ourLineLengthY * (vertex1.getX() - pointCenter.getX());
@@ -238,9 +262,6 @@ public class CalculateLength {
                 lineLength = Math.sqrt(Math.pow(lineLengthX, 2) + Math.pow(lineLengthY, 2));
                 return lineLength;
             }
-
-            R23x = vertex3.getX() - vertex2.getX();
-            R23y = vertex3.getY() - vertex2.getY();
 
             DD = -1 * ourLineLengthX * R23y + ourLineLengthY * R23x;
             DA = -1 * (vertex2.getX() - pointCenter.getX()) * R23y + (vertex2.getY() - pointCenter.getY()) * R23x;
@@ -260,9 +281,6 @@ public class CalculateLength {
                 return lineLength;
             }
 
-            R34x = vertex4.getX() - vertex3.getX();
-            R34y = vertex4.getY() - vertex3.getY();
-
             DD = -1 * ourLineLengthX * R34y + ourLineLengthY * R34x;
             DA = -1 * (vertex3.getX() - pointCenter.getX()) * R34y + (vertex3.getY() - pointCenter.getY()) * R34x;
             DB = ourLineLengthX * (vertex3.getY() - pointCenter.getY()) - ourLineLengthY * (vertex3.getX() - pointCenter.getX());
@@ -280,9 +298,6 @@ public class CalculateLength {
                 lineLength = Math.sqrt(Math.pow(lineLengthX, 2) + Math.pow(lineLengthY, 2));
                 return lineLength;
             }
-
-            R41x = vertex1.getX() - vertex4.getX();
-            R41y = vertex1.getY() - vertex4.getY();
 
             DD = -1 * ourLineLengthX * R41y + ourLineLengthY * R41x;
             DA = -1 * (vertex4.getX() - pointCenter.getX()) * R41y + (vertex4.getY() - pointCenter.getY()) * R41x;
@@ -307,11 +322,6 @@ public class CalculateLength {
         if (!checkIsPointInRectangle(pointCenter, ourRectangle) && !checkIsPointInRectangle(point, ourRectangle)) {
             //Создание хранилища точек пересечения, так как незнаем с какой стороной пересекается отрезок и пересекается ли
             Map<Integer, String> mapCache = new HashMap<Integer, String>();
-            double ourLineLengthX = point.getX() - pointCenter.getX();
-            double ourLineLengthY = point.getY() - pointCenter.getY();
-
-            R12x = vertex2.getX() - vertex1.getX();
-            R12y = vertex2.getY() - vertex1.getY();
 
             double DD = -1 * ourLineLengthX * R12y + ourLineLengthY * R12x;
             double DA = -1 * (vertex1.getX() - pointCenter.getX()) * R12y + (vertex1.getY() - pointCenter.getY()) * R12x;
@@ -327,9 +337,6 @@ public class CalculateLength {
                 //Заносим в мапу
                 mapCache.put(1, String.valueOf(p1X) + "; " + String.valueOf(p1Y));
             }
-
-            R23x = vertex3.getX() - vertex2.getX();
-            R23y = vertex3.getY() - vertex2.getY();
 
             DD = -1 * ourLineLengthX * R23y + ourLineLengthY * R23x;
             DA = -1 * (vertex2.getX() - pointCenter.getX()) * R23y + (vertex2.getY() - pointCenter.getY()) * R23x;
@@ -350,9 +357,6 @@ public class CalculateLength {
                     mapCache.put(1, String.valueOf(pX) + "; " + String.valueOf(pY));
                 }
             }
-
-            R34x = vertex4.getX() - vertex3.getX();
-            R34y = vertex4.getY() - vertex3.getY();
 
             DD = -1 * ourLineLengthX * R34y + ourLineLengthY * R34x;
             DA = -1 * (vertex3.getX() - pointCenter.getX()) * R34y + (vertex3.getY() - pointCenter.getY()) * R34x;
@@ -419,13 +423,33 @@ public class CalculateLength {
         return lineLength;
     }
 
+     //Метод для нахождения точек линии пересечения
      public List<Point> getIntersectionPoints(Point point, OurRectangle ourRectangle){
-
          List<Point> pointList = ourRectangle.getAllPoints();
          Point vertex1 = pointList.get(0);
          Point vertex2 = pointList.get(1);
          Point vertex3 = pointList.get(2);
          Point vertex4 = pointList.get(3);
+
+         //Ищем длину нашего отрезка
+         ourLineLengthX = point.getX() - pointCenter.getX();
+         ourLineLengthY = point.getY() - pointCenter.getY();
+
+         //Ищем длину стороны образованной 1 и 2 вершиной
+         R12x = vertex2.getX() - vertex1.getX();
+         R12y = vertex2.getY() - vertex1.getY();
+
+         //Ищем длину стороны образованной 2 и 3 вершиной
+         R23x = vertex3.getX() - vertex2.getX();
+         R23y = vertex3.getY() - vertex2.getY();
+
+         //Ищем длину стороны образованной 3 и 4 вершиной
+         R34x = vertex4.getX() - vertex3.getX();
+         R34y = vertex4.getY() - vertex3.getY();
+
+         //Ищем длину стороны образованной 4 и 1 вершиной
+         R41x = vertex1.getX() - vertex4.getX();
+         R41y = vertex1.getY() - vertex4.getY();
 
          List<Point> points = new ArrayList<>();
 
@@ -443,16 +467,10 @@ public class CalculateLength {
 
          //Начальная точка лежит, конечная нет
          if (checkIsPointInRectangle(pointCenter, ourRectangle) && !checkIsPointInRectangle(point, ourRectangle)) {
-             double ourLineLengthX = point.getX() - pointCenter.getX();
-             double ourLineLengthY = point.getY() - pointCenter.getY();
-
-             R12x = vertex2.getX() - vertex1.getX();
-             R12y = vertex2.getY() - vertex1.getY();
-
              double DD = -1 * ourLineLengthX * R12y + ourLineLengthY * R12x;
-
              double DA = -1 * (vertex1.getX() - pointCenter.getX()) * R12y + (vertex1.getY() - pointCenter.getY()) * R12x;
              double DB = ourLineLengthX * (vertex1.getY() - pointCenter.getY()) - ourLineLengthY * (vertex1.getX() - pointCenter.getX());
+
              lineParameter = DA / DD;
              lineParameterVertex12 = DB / DD;
 
@@ -464,9 +482,6 @@ public class CalculateLength {
                  points.add(intersectionPoint);
                  return points;
              }
-
-             R23x = vertex3.getX() - vertex2.getX();
-             R23y = vertex3.getY() - vertex2.getY();
 
              DD = -1 * ourLineLengthX * R23y + ourLineLengthY * R23x;
              DA = -1 * (vertex2.getX() - pointCenter.getX()) * R23y + (vertex2.getY() - pointCenter.getY()) * R23x;
@@ -484,9 +499,6 @@ public class CalculateLength {
                  return points;
              }
 
-             R34x = vertex4.getX() - vertex3.getX();
-             R34y = vertex4.getY() - vertex3.getY();
-
              DD = -1 * ourLineLengthX * R34y + ourLineLengthY * R34x;
              DA = -1 * (vertex3.getX() - pointCenter.getX()) * R34y + (vertex3.getY() - pointCenter.getY()) * R34x;
              DB = ourLineLengthX * (vertex3.getY() - pointCenter.getY()) - ourLineLengthY * (vertex3.getX() - pointCenter.getX());
@@ -502,9 +514,6 @@ public class CalculateLength {
                  points.add(intersectionPoint);
                  return points;
              }
-
-             R41x = vertex1.getX() - vertex4.getX();
-             R41y = vertex1.getY() - vertex4.getY();
 
              DD = -1 * ourLineLengthX * R41y + ourLineLengthY * R41x;
              DA = -1 * (vertex4.getX() - pointCenter.getX()) * R41y + (vertex4.getY() - pointCenter.getY()) * R41x;
@@ -526,15 +535,10 @@ public class CalculateLength {
           * центральная точка не лежит внутри прямоугольника, конечная точка лежит внутри прямоугольника
           */
          if (!checkIsPointInRectangle(pointCenter, ourRectangle) && checkIsPointInRectangle(point, ourRectangle)) {
-             double ourLineLengthX = point.getX() - pointCenter.getX();
-             double ourLineLengthY = point.getY() - pointCenter.getY();
-
-             R12x = vertex2.getX() - vertex1.getX();
-             R12y = vertex2.getY() - vertex1.getY();
-
              double DD = -1 * ourLineLengthX * R12y + ourLineLengthY * R12x;
              double DA = -1 * (vertex1.getX() - pointCenter.getX()) * R12y + (vertex1.getY() - pointCenter.getY()) * R12x;
              double DB = ourLineLengthX * (vertex1.getY() - pointCenter.getY()) - ourLineLengthY * (vertex1.getX() - pointCenter.getX());
+
              lineParameter = DA / DD;
              lineParameterVertex12 = DB / DD;
 
@@ -546,9 +550,6 @@ public class CalculateLength {
                  points.add(point);
                  return points;
              }
-
-             R23x = vertex3.getX() - vertex2.getX();
-             R23y = vertex3.getY() - vertex2.getY();
 
              DD = -1 * ourLineLengthX * R23y + ourLineLengthY * R23x;
              DA = -1 * (vertex2.getX() - pointCenter.getX()) * R23y + (vertex2.getY() - pointCenter.getY()) * R23x;
@@ -566,9 +567,6 @@ public class CalculateLength {
                  return points;
              }
 
-             R34x = vertex4.getX() - vertex3.getX();
-             R34y = vertex4.getY() - vertex3.getY();
-
              DD = -1 * ourLineLengthX * R34y + ourLineLengthY * R34x;
              DA = -1 * (vertex3.getX() - pointCenter.getX()) * R34y + (vertex3.getY() - pointCenter.getY()) * R34x;
              DB = ourLineLengthX * (vertex3.getY() - pointCenter.getY()) - ourLineLengthY * (vertex3.getX() - pointCenter.getX());
@@ -584,9 +582,6 @@ public class CalculateLength {
                  points.add(point);
                  return points;
              }
-
-             R41x = vertex1.getX() - vertex4.getX();
-             R41y = vertex1.getY() - vertex4.getY();
 
              DD = -1 * ourLineLengthX * R41y + ourLineLengthY * R41x;
              DA = -1 * (vertex4.getX() - pointCenter.getX()) * R41y + (vertex4.getY() - pointCenter.getY()) * R41x;
@@ -607,11 +602,6 @@ public class CalculateLength {
          //начальная и конечная точки не лежат внутри прямоугольника
          if (!checkIsPointInRectangle(pointCenter, ourRectangle) && !checkIsPointInRectangle(point, ourRectangle)) {
              Map<Integer, String> mapCache = new HashMap<Integer, String>();
-             double ourLineLengthX = point.getX() - pointCenter.getX();
-             double ourLineLengthY = point.getY() - pointCenter.getY();
-
-             R12x = vertex2.getX() - vertex1.getX();
-             R12y = vertex2.getY() - vertex1.getY();
 
              double DD = -1 * ourLineLengthX * R12y + ourLineLengthY * R12x;
              double DA = -1 * (vertex1.getX() - pointCenter.getX()) * R12y + (vertex1.getY() - pointCenter.getY()) * R12x;
@@ -625,9 +615,6 @@ public class CalculateLength {
                  double p1Y = pointCenter.getY() + lineParameter * ourLineLengthY;
                  mapCache.put(1, String.valueOf(p1X) + "; " + String.valueOf(p1Y));
              }
-
-             R23x = vertex3.getX() - vertex2.getX();
-             R23y = vertex3.getY() - vertex2.getY();
 
              DD = -1 * ourLineLengthX * R23y + ourLineLengthY * R23x;
              DA = -1 * (vertex2.getX() - pointCenter.getX()) * R23y + (vertex2.getY() - pointCenter.getY()) * R23x;
@@ -646,9 +633,6 @@ public class CalculateLength {
                  }
              }
 
-             R34x = vertex4.getX() - vertex3.getX();
-             R34y = vertex4.getY() - vertex3.getY();
-
              DD = -1 * ourLineLengthX * R34y + ourLineLengthY * R34x;
              DA = -1 * (vertex3.getX() - pointCenter.getX()) * R34y + (vertex3.getY() - pointCenter.getY()) * R34x;
              DB = ourLineLengthX * (vertex3.getY() - pointCenter.getY()) - ourLineLengthY * (vertex3.getX() - pointCenter.getX());
@@ -665,9 +649,6 @@ public class CalculateLength {
                      mapCache.put(1, String.valueOf(pX) + "; " + String.valueOf(pY));
                  }
              }
-
-             R41x = vertex1.getX() - vertex4.getX();
-             R41y = vertex1.getY() - vertex4.getY();
 
              DD = -1 * ourLineLengthX * R41y + ourLineLengthY * R41x;
              DA = -1 * (vertex4.getX() - pointCenter.getX()) * R41y + (vertex4.getY() - pointCenter.getY()) * R41x;
