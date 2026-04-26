@@ -100,8 +100,11 @@ public class Application {
 
         JButton calculateButton = new JButton("Сделать вычисления");
 
+        JButton informationButton = new JButton("Информация о приложении");
+
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         buttonPanel.add(calculateButton);
+        buttonPanel.add(informationButton);
         
         JPanel resultsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
@@ -125,6 +128,16 @@ public class Application {
 	        	resultsPanel.add(resultField);
 			}
 		});
+
+        informationButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(frame, "На плоскости задано множество точек и множество прямоугольников. \n" +
+                        "Прямоугольник задается двумя вершинами одной из сторон и точкой, лежащей на прямой, проходящей через две другие вершины.\n" +
+                        "Требуется построить отрезки, которые начинаются в начале координат и заканчиваются в заданных точках. \n" +
+                        "Необходимо найти такой прямоугольник и такой отрезок, чтобы этот прямоугольник содержал в себе часть отрезка наибольшей длины (из всех возможных пар «отрезок-прямоугольник»).\n");
+            }
+        });
 
         return rightPanel;
     }
