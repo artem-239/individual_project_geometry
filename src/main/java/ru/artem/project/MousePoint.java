@@ -11,21 +11,13 @@ import javax.swing.JPanel;
 public class MousePoint extends JPanel {
 	private int x;
 	private int y;
-	private int radius;
 
 	public MousePoint(Point pairOfCoordinates, int width, int height) {
 		this.x = (int) Util.transformX(pairOfCoordinates.getX(), width);
 		this.y = (int) Util.transformY(pairOfCoordinates.getY(), height);
-		
-		System.out.println(">>>>>>>добавил точку мыши: " + x + ", " + y);
+
 		this.setBounds(0, 0, width, height);
 		setOpaque(false);
-	}
-
-	public void setBeacon(int x, int y) {
-		this.x = x;
-		this.y = y;
-		repaint();
 	}
 
 	@Override

@@ -14,16 +14,12 @@ public class DrawRectangle extends JPanel {
         this.width = width;
         this.height = height;
         this.setBounds(0, 0, width, height);
-//        this.setPreferredSize(new Dimension(width, height));
         setOpaque(false);
     }
 
     public void paintComponent(Graphics graphics) {
-//    	super.paintComponent(graphics);
-//    	System.out.println("Количество прямоугольников: " + rectangles.size());
         for (OurRectangle rectangle : rectangles) {
         	if (!rectangle.isRectangleExist()) {
-        		System.out.println("Прямоугольник не существует: " + rectangle);
         		continue;
         	}
             List<Point> points = rectangle.getAllPoints();
@@ -48,6 +44,5 @@ public class DrawRectangle extends JPanel {
             int numberOfPoints = 4;
             graphics.drawPolygon(xPoints, yPoints, numberOfPoints);
         }
-//        System.out.println("нарисовал прямоугольники");
     }
 }

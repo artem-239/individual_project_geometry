@@ -11,7 +11,6 @@ public class CoordinateSystem extends JPanel {
         this.width = width;
         this.height = height;
         this.setBounds(0, 0, width, height);
-//        this.setPreferredSize(new Dimension(width, height));
         setOpaque(false);
     }
 
@@ -60,10 +59,5 @@ public class CoordinateSystem extends JPanel {
         graphics.drawLine(width / 2 - 5, height / 2 + 250, width / 2 + 5, height / 2 + 250);
         graphics.drawLine(width / 2 - 10, height / 2 + 300, width / 2 + 10, height / 2 + 300);
         graphics.drawLine(width / 2 - 5, height / 2 + 350, width / 2 + 5, height / 2 + 350);
-        
-        
-//        graphics.drawLine(width / 2 - 15, height / 2, width / 2 + 15, height / 2);
-        
-//        System.out.println("нарисовал систему координат");
     }
 }

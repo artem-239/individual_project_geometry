@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.StringTokenizer;
-
+//Центральный класс, на котором реализован весь интерфейс программы
 public class Application {
 
     private JFrame frame;
@@ -473,12 +473,10 @@ public class Application {
         return panel;
     }
 
-    /* ---------- лева панель: ряды в прямоугольниках ---------- */
+    /* ---------- левая панель: ряды в прямоугольниках ---------- */
     private void addRectangleRow() {
 
         JPanel row = new JPanel(new FlowLayout(FlowLayout.LEFT));
-
-//        JLabel label = new JLabel("Прямоугольник:   ");
 
         JLabel l1 = new JLabel("Вершина 1");
         JTextField f1 = createField();
@@ -504,11 +502,6 @@ public class Application {
 	            if (rectangle.isRectangleExist()) {
 	            	drawingArea.addRectangle(rectangle);
 	            }
-	            System.out.println("Прямоугольник:");
-	            System.out.println("  Вершина1 = " + v1);
-	            System.out.println("  Вершина2 = " + v2);
-	            System.out.println("  Точка = " + v3);
-	            System.out.println("-----------------------");
 	            
 	            f1.setEditable(false);
 	            f2.setEditable(false);

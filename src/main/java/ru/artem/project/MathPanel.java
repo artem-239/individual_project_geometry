@@ -13,6 +13,7 @@ public class MathPanel extends JPanel {
     private int height;
     private ArrayList<OurRectangle> rectangles = new ArrayList<>();
     private ArrayList<Point> onePairCoordinate = new ArrayList<>();
+    //Список точек, введенных мышью, для 1 прямоугольника
     private List<Point> mouseRectanglePoints = new ArrayList<>();
     
     public MathPanel(int width, int height) {
@@ -45,14 +46,12 @@ public class MathPanel extends JPanel {
     	rectangles.remove(rectangle);
     	refresh();
     	paint();
-    	
     }
     
     public void deleteAllRectangles() {
     	rectangles.clear();
     	refresh();
     	paint();
-    	
     }
     
     public void addPoint(Point point) {
@@ -60,7 +59,6 @@ public class MathPanel extends JPanel {
     	//Добавить на панель
     	refresh();
     	paint();
-    	
     }
     
     public void addPoints(List<Point> points) {
@@ -85,7 +83,6 @@ public class MathPanel extends JPanel {
     	onePairCoordinate.clear();
     	refresh();
     	paint();
-    	
     }
     
     public void addMouseRectanglePoints(List<Point> points) {
@@ -116,15 +113,15 @@ public class MathPanel extends JPanel {
     	paint();
     	
     }
-    
+    //Метод для динамического обновления панели после изменения количества фигур, или добавления(или удаления) чего-то на экран
     private void refresh() {
     	this.removeAll();
         this.revalidate();
         this.repaint();
     }
 
+    //Метод для
     public JPanel paint() {
-    	System.out.println("Размер списка точек прямоугольников мыши: " + mouseRectanglePoints.size());
     	if (mouseRectanglePoints.size() == 3) {
         	//создаю прямоугольник 
     		OurRectangle or = new OurRectangle(mouseRectanglePoints.get(0), mouseRectanglePoints.get(1), mouseRectanglePoints.get(2));
@@ -134,13 +131,8 @@ public class MathPanel extends JPanel {
     		mouseRectanglePoints.clear();
         }
         CoordinateSystem coordinateSystem = new CoordinateSystem(width, height);
-//        System.out.println("создал систему координат");
         DrawRectangle drawRectangle = new DrawRectangle(width, height, rectangles);
-//        System.out.println("Количество прямоугольников в MathPanel: " + rectangles.size()
-//        		+ "; hash: " + this.hashCode());
-//        System.out.println("создал прямоугольники");
         DrawLine drawLine = new DrawLine(onePairCoordinate, width, height);
-//        System.out.println("создал точки");
         
         this.add(drawLine);
         this.add(drawRectangle);
@@ -148,11 +140,9 @@ public class MathPanel extends JPanel {
         
         for (Point mp : mouseRectanglePoints) {
         	MousePoint mpG = new MousePoint(mp, width, height);
-        	System.out.println("создал точку прямоугольника мыши");
         	this.add(mpG);
         }
-        
-//        this.setVisible(true);
+
         addMouseLabel();
         return this;
     }
@@ -213,16 +203,9 @@ public class MathPanel extends JPanel {
 
         if (curRect != null && maxLengthCounter == 1){
             CalculateLength calculateLength = new CalculateLength();
-            System.out.println(curRect.toString());
-            System.out.println("maxLength = " + maxLength);
             List<Point> points = calculateLength.getIntersectionPoints(curPoint, curRect);
-            Point point1 = points.get(0);
-            Point point2 = points.get(1);
-            System.out.println(point1.getX() + " " + point1.getY());
-            System.out.println(point2.getX() + " " + point2.getY());
 
             DrawMaxLine drawMaxLine = new DrawMaxLine(calculateLength.getIntersectionPoints(curPoint, curRect), width, height);
-            System.out.println(curPoint.getX() + " " + curPoint.getY());
             DrawDot drawDot = new DrawDot(curPoint, width, height);
             
             refresh();

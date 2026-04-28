@@ -42,6 +42,7 @@ public class OurRectangle {
     private double perpendicularY;
     //Переменная для определения существования прямоугольника
     private boolean isRectangleExist = true;
+    //Векторное произведение
     private double vectorProduct;
 
     public OurRectangle(Point vertex1, Point vertex2, Point point3) {
@@ -126,34 +127,6 @@ public class OurRectangle {
         Vy = point.getY() - vertex1.getY();
         //определяем угол между векторами V и R
         dotProduct = lengthBetweenVertexX * Vx + Vy * lengthBetweenVertexY;
-    }
-
-   public double getHeight() {
-        perpendicularX = vertex1.getX() + (vertex2.getX() - vertex1.getX()) * parameter;
-        perpendicularY = vertex1.getY() + (vertex2.getY() - vertex1.getY()) * parameter;
-        perpendicularLengthX = perpendicularX - point.getX();
-        perpendicularLengthY = perpendicularY - point.getY();
-        perpendicularLength = Math.sqrt(Math.pow(perpendicularLengthX, 2) + Math.pow(perpendicularLengthY, 2));
-        if (lengthBetweenVertex > perpendicularLength){
-            return lengthBetweenVertex;
-        }
-        else {
-            return perpendicularLength;
-        }
-    }
-
-    public double getWidth() {
-        perpendicularX = vertex1.getX() + (vertex2.getX() - vertex1.getX()) * parameter;
-        perpendicularY = vertex1.getY() + (vertex2.getY() - vertex1.getY()) * parameter;
-        perpendicularLengthX = perpendicularX - point.getX();
-        perpendicularLengthY = perpendicularY - point.getY();
-        perpendicularLength = Math.sqrt(Math.pow(perpendicularLengthX, 2) + Math.pow(perpendicularLengthY, 2));
-        if (lengthBetweenVertex < perpendicularLength){
-            return lengthBetweenVertex;
-        }
-        else {
-            return perpendicularLength;
-        }
     }
 
     public Point getPoint(){

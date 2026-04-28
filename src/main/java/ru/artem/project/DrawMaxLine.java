@@ -15,7 +15,6 @@ public class DrawMaxLine extends JPanel {
         this.width = width;
         this.height = height;
         this.setBounds(0, 0, width, height);
-//      this.setPreferredSize(new Dimension(width, height));
         setOpaque(false);
     }
 
@@ -36,6 +35,5 @@ public class DrawMaxLine extends JPanel {
         int secondIntersectionPointY = (int) Math.round(Util.transformY(secondIntersectionPoint.getY(), height));
 
         graphics2D.drawLine(firstIntersectionPointX, firstIntersectionPointY, secondIntersectionPointX, secondIntersectionPointY);
-        System.out.println("нарисовал линию пересечения");
     }
 }

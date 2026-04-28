@@ -5,7 +5,6 @@ import java.util.StringTokenizer;
 public class Point extends Point2D {
     private double x;
     private double y;
-    private int radius;
 
     public Point(String pairOfCoordinates) {
         //Пара координат X и Y через запятую
@@ -27,10 +26,6 @@ public class Point extends Point2D {
     @Override
     public double getY() {
         return y;
-    }
-
-    public int getRadius() {
-        return radius;
     }
 
     @Override
