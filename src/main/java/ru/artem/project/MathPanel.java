@@ -99,7 +99,7 @@ public class MathPanel extends JPanel {
         this.repaint();
     }
 
-    //Метод для
+    //Метод для отрисовки на экран всех компонентов
     public JPanel paint() {
     	if (mouseRectanglePoints.size() == 3) {
         	//создаю прямоугольник 

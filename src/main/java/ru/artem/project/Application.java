@@ -114,8 +114,8 @@ public class Application {
         buttonPanel.add(calculateButton);
 
         rightPanel.add(bottomPanel, BorderLayout.SOUTH);
-        
-        calculateButton.addActionListener(new ActionListener() {			
+
+        calculateButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				double maxLength = drawingArea.makeCalculation();
@@ -158,7 +158,7 @@ public class Application {
         group.add(loadFromFile);
         group.add(keyboard);
         group.add(mouse);
-        
+
         loadFromFile.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -548,13 +548,9 @@ public class Application {
 
     /* ---------- левая панель: ряды точек ---------- */
     private void addPointRow() {
-
         JPanel row = new JPanel(new FlowLayout(FlowLayout.LEFT));
-
         JLabel label = new JLabel("Точка");
-
         JTextField field = createField();
-
         JButton paint = new JButton(new BrushIcon());
         JButton delete = new JButton(new TrashIcon());
         
