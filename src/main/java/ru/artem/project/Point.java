@@ -8,9 +8,10 @@ public class Point extends Point2D {
 
     public Point(String pairOfCoordinates) {
         //Пара координат X и Y через запятую
-        StringTokenizer tokenizer = new StringTokenizer(pairOfCoordinates, ",");
-        double x = java.lang.Double.parseDouble(tokenizer.nextToken());
-        double y = java.lang.Double.parseDouble(tokenizer.nextToken());
+        String[] pairCoordinate = pairOfCoordinates.split(",");
+
+        double x = java.lang.Double.parseDouble(pairCoordinate[0]);
+        double y = java.lang.Double.parseDouble(pairCoordinate[1]);
         setLocation(x, y);
     }
 

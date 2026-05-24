@@ -203,8 +203,8 @@ public class Application {
         dataStorageButtonPanel.add(dataStorage);
         dataStorageButtonPanel.setPreferredSize(new Dimension(MATHPANEL_BOTTOM_WIDTH, MATHPANEL_BOTTOM_HEIGHT));
 
-        ArrayList<OurRectangle> rectangles1 = drawingArea.getAllRectangles();
-        ArrayList<Point> points1 = drawingArea.getAllPoints();
+        List<OurRectangle> rectangles1 = drawingArea.getAllRectangles();
+        List<Point> points1 = drawingArea.getAllPoints();
 
 
         dataStorage.addActionListener(new ActionListener() {
@@ -241,20 +241,21 @@ public class Application {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser chooser = new JFileChooser();
+
 	            if (chooser.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
 	                fileField.setText(chooser.getSelectedFile().getAbsolutePath());
 	                dataFileInput(chooser.getSelectedFile().getAbsolutePath());
 	                drawingArea.addPoints(onePairCoordinate);
-	                System.out.println("Количество прямоугольников в Application: " + rectangles.size() 
-	                		+ "; hash: " + drawingArea.hashCode());
+
 	                drawingArea.addRectangles(rectangles);
+
 	                fileResultsPanel.removeAll();
 	                fileResultsPanel.revalidate();
 	                fileResultsPanel.repaint();
+
 	                for (String row : fileResults) {
 	                	JLabel lbl = new JLabel(row);
 	                	fileResultsPanel.add(lbl);
-	                	System.out.println("::::::::::::::::: " + row);
 	                }
 	            }
 			}
@@ -309,6 +310,7 @@ public class Application {
 				mousePointsSelect = false;
 			}
 		});
+
         pointsButton.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -376,7 +378,6 @@ public class Application {
                 
 			}
         });
-        
 
         refresh();
     }
@@ -563,9 +564,6 @@ public class Application {
 				String value = field.getText();
 	            Point point = new Point(value);
 	            drawingArea.addPoint(point);
-	            System.out.println("Точка:");
-	            System.out.println("  Координаты  = " + value);
-	            System.out.println("-----------------------");
 	            field.setEditable(false);
 	            paint.setEnabled(false);
 			}
@@ -599,7 +597,6 @@ public class Application {
         return f;
     }
 
-
     //Обновление структуры и перерисовывание панели
     private void refreshContainer(JPanel panel) {
         panel.revalidate();
@@ -630,7 +627,6 @@ public class Application {
                     boolean isRectangleExist = rectangle.isRectangleExist();
                     if (isRectangleExist) {
                         rectangles.add(rectangle);
-                        System.out.println("Добавили прямоугольник: " + coordinates);
                         curRow = "Прямоугольник: " + curRow;
                     } else {
                         System.out.println("Такой прямоугольник не нарисовать: " + coordinates);
@@ -650,14 +646,14 @@ public class Application {
         }
     }
     //Выбор файла для записи
-    private void fileDataStorage(ArrayList<OurRectangle> rectangles, ArrayList<Point> points) {
+    private void fileDataStorage(List<OurRectangle> rectangles, List<Point> points) {
         JFileChooser chooser = new JFileChooser();
         if (chooser.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
             dataFileOutput(chooser.getSelectedFile().getAbsolutePath(), rectangles, points);
         }
     }
     //Запись в файл
-    private void dataFileOutput(String filePath, ArrayList<OurRectangle> rectangles, ArrayList<Point> points) {
+    private void dataFileOutput(String filePath, List<OurRectangle> rectangles, List<Point> points) {
         try (BufferedWriter fileWriter = new BufferedWriter(new FileWriter(filePath, false))) {
             for (OurRectangle rectangle : rectangles){
                 String rectangleString = rectangle.toString();
@@ -688,18 +684,21 @@ public class Application {
     }
     //Создание прямоугольника по введенным координатам
     private OurRectangle createRectangle(String coordinates) {
-        StringTokenizer tokenizer = new StringTokenizer(coordinates, ";");
-        Point vertex1 = new Point(tokenizer.nextToken());
-        Point vertex2 = new Point(tokenizer.nextToken());
-        Point point3 = new Point(tokenizer.nextToken());
+        String[] coordinateParts = coordinates.split(";");
+
+        Point vertex1 = new Point(coordinateParts[0]);
+        Point vertex2 = new Point(coordinateParts[1]);
+        Point point3 = new Point(coordinateParts[2]);
+
         OurRectangle rectangle = new OurRectangle(vertex1, vertex2, point3);
         return rectangle;
     }
     //Создание точки по введенным координатам
     private Point createPoint(String coordinates) {
-        StringTokenizer tokenizer = new StringTokenizer(coordinates, ",");
-        int x = Integer.parseInt(tokenizer.nextToken());
-        int y = Integer.parseInt(tokenizer.nextToken());
+        String[] coordinateParts = coordinates.split(",");
+
+        int x = Integer.parseInt(coordinateParts[0]);
+        int y = Integer.parseInt(coordinateParts[1]);
         Point point = new Point(x, y);
         return point;
     }

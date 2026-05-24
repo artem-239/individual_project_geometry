@@ -11,8 +11,8 @@ public class MathPanel extends JPanel {
 
     private int width;
     private int height;
-    private ArrayList<OurRectangle> rectangles = new ArrayList<>();
-    private ArrayList<Point> onePairCoordinate = new ArrayList<>();
+    private List<OurRectangle> rectangles = new ArrayList<>();
+    private List<Point> onePairCoordinate = new ArrayList<>();
     //Список точек, введенных мышью, для 1 прямоугольника
     private List<Point> mouseRectanglePoints = new ArrayList<>();
     
@@ -38,7 +38,7 @@ public class MathPanel extends JPanel {
     	paint();
     }
     
-    public ArrayList<OurRectangle> getAllRectangles() {
+    public List<OurRectangle> getAllRectangles() {
     	return rectangles;
     }
     
@@ -75,7 +75,7 @@ public class MathPanel extends JPanel {
     	paint();
     }
     
-    public ArrayList<Point> getAllPoints() {
+    public List<Point> getAllPoints() {
     	return onePairCoordinate;
     }
     
@@ -85,34 +85,13 @@ public class MathPanel extends JPanel {
     	paint();
     }
     
-    public void addMouseRectanglePoints(List<Point> points) {
-    	mouseRectanglePoints.addAll(points);
-    	//Добавить на панель
-    	refresh();
-    	paint();
-    }
-    
     public void addMouseRectanglePoint(Point point) {
     	mouseRectanglePoints.add(point);
     	//Добавить на панель
     	refresh();
     	paint();
-    	
     }
-    
-    public void deleteMouseRectanglePoint(Point point) {
-    	mouseRectanglePoints.remove(point);
-    	//Добавить на панель
-    	refresh();
-    	paint();
-    }
-    
-    public void deleteAllMouseRectanglePoints() {
-    	mouseRectanglePoints.clear();
-    	refresh();
-    	paint();
-    	
-    }
+
     //Метод для динамического обновления панели после изменения количества фигур, или добавления(или удаления) чего-то на экран
     private void refresh() {
     	this.removeAll();
